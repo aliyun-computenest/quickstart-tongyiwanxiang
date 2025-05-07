@@ -1,18 +1,47 @@
 Service:
-  RegionId: cn-hangzhou
   DeployType: ros
   DeployMetadata:
-    ServiceInstanceNameRule:
-      Prefix: tongyiwanxiang-
+    SupplierDeployMetadata:
+      DeployTimeout: 7200
+      SupplierTemplateConfigs:
+        - Name: 模板1
+          Url: 
+            https://service-info-private.oss-cn-hangzhou.aliyuncs.com/1853370294850618/template/52ecf577-7ba4-44c0-9c3a-503d1278a366.json?Expires=1746674766&OSSAccessKeyId=LTAI5tCYphFhocJemeMWmXst&Signature=phl82I1RjMkBMeqlm0cxvtWV8OQ%3D
+          PredefinedParameters: []
+          AllowedRegions:
+            - cn-beijing
+            - cn-hangzhou
+            - cn-heyuan
     TemplateConfigs:
-      - Name: 单机版
-        Url: 'ros_templates/template.yaml'
+      - Name: 模板1
+        Url: ros_templates/template.yaml
         AllowedRegions:
           - cn-beijing
           - cn-hangzhou
           - cn-heyuan
+        PredefinedParameters: []
+        DeployScene: ECS
+        OutputConfigs:
+          - OutputKey: __biubiu__
+            EnableWebProxy: false
+    NetworkMetadata:
+      EnablePrivateVpcConnection: false
+      EnableReversePrivateVpcConnection: false
+    ServiceInstanceNameRule:
+      UseDefaultValue: false
+  OperationMetadata:
+    SupportBackup: false
+    PrometheusConfigMap:
+      模板1:
+        EnablePrometheus: false
   ServiceType: private
   ServiceInfo:
-    Locale: zh-CN
-    ShortDescription: tongyiwanxiang app deploy
-    Image: 'resources/icons/service_logo.png'
+    - Agreements: []
+      Image: resources/icons/service_logo_zh-CN.png
+      Locale: zh-CN
+      Name: 通义万相 AI 绘画
+      ShortDescription: 本服务展示了如何利用自研的通义万相 AIGC 技术在 Web 服务中实现先进的图像生成。其中包括文本到图像、涂鸦转换、人像风格重塑以及人物写真创建等功能。这些能力可以加快艺术家和设计师的创作流程，提高创意效率。同时，也可以在广告营销、教育和游戏开发等多个领域进行应用，以提升内容的视觉表现和用户体验。
+      Softwares: []
+  ShareType: Public
+  ApprovalType: Manual
+Artifact: {}
