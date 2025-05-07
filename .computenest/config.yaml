@@ -1,0 +1,18 @@
+Service:
+  RegionId: cn-hangzhou
+  DeployType: ros
+  DeployMetadata:
+    ServiceInstanceNameRule:
+      Prefix: tongyiwanxiang-
+    TemplateConfigs:
+      - Name: 单机版
+        Url: 'ros_templates/template.yaml'
+        AllowedRegions:
+          - cn-beijing
+          - cn-hangzhou
+          - cn-heyuan
+  ServiceType: private
+  ServiceInfo:
+    Locale: zh-CN
+    ShortDescription: tongyiwanxiang app deploy
+    Image: 'resources/icons/service_logo.png'
