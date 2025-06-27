@@ -5,8 +5,7 @@ Service:
       DeployTimeout: 7200
       SupplierTemplateConfigs:
         - Name: 模板1
-          Url: 
-            https://service-info-private.oss-cn-hangzhou.aliyuncs.com/1853370294850618/template/52ecf577-7ba4-44c0-9c3a-503d1278a366.json?Expires=1746674766&OSSAccessKeyId=LTAI5tCYphFhocJemeMWmXst&Signature=phl82I1RjMkBMeqlm0cxvtWV8OQ%3D
+          Url: ros_templates/template.yaml
           PredefinedParameters: []
           AllowedRegions:
             - cn-beijing
