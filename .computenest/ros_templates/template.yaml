@@ -221,19 +221,12 @@ Parameters:
     AssociationProperty: ALIYUN::ECS::Instance::Password
     AssociationPropertyMetadata:
       Random: true
-  BaiLianApiKey:
+  AppApiKey:
     Type: String
-    NoEcho: true
     Label:
-      en: BaiLian API-KEY
-      zh-cn: 百炼 API-KEY
-    ConstraintDescription:
-      zh-cn: 开通百炼模型服务，并获得 API-KEY。请参考： <a href="https://help.aliyun.com/zh/model-studio/getting-started/first-api-call-to-qwen"  target="_blank">首次调用通义千问API</a>。
-      en: 'Activate BaiLian and obtain the API-KEY. Please refer to:  <a href="https://help.aliyun.com/zh/model-studio/getting-started/first-api-call-to-qwen"  target="_blank">First call to Tongyi Qianwen API</a>.'
-    Description:
-      zh-cn: 开通百炼模型服务，并获得 API-KEY。请参考： <a href="https://help.aliyun.com/zh/model-studio/getting-started/first-api-call-to-qwen"  target="_blank">首次调用通义千问API</a>。
-      en: 'Activate BaiLian and obtain the API-KEY. Please refer to:  <a href="https://help.aliyun.com/zh/model-studio/getting-started/first-api-call-to-qwen"  target="_blank">First call to Tongyi Qianwen API</a>.'
-    AssociationProperty: ALIYUN::DashScope::ApiKey
+      en: API-KEY of bailian
+      zh-cn: 百炼API-KEY
+    AssociationProperty: ALIYUN::Bailian::ApiKey::ApiKeyInfo
 Resources:
   # 新建vpc
   EcsVpc:
@@ -363,22 +356,28 @@ Resources:
       Sync: true
       Timeout: 3600
       CommandContent:
-        Fn::Sub: |-
-          #!/bin/bash
+        Fn::Sub:
+          - |-
+            #!/bin/bash
 
-          cat << EOF >> ~/.bash_profile
-          export BAILIAN_API_KEY="${BaiLianApiKey}"
-          export OSS_ACCESS_KEY_ID="${AccessKey.AccessKeyId}"
-          export OSS_ACCESS_KEY_SECRET="${AccessKey.AccessKeySecret}"
-          export WANX_DEMO_OSS_BUCKET="${ALIYUN::StackId}"
-          export WANX_DEMO_USERNAME="${DemoUserName}"
-          export WANX_DEMO_PASSWORD="${DemoUserPassword}"
-          export WANX_DEMO_OSS_ENDPOINT="https://oss-${ALIYUN::Region}.aliyuncs.com"
-          export ROS_DEPLOY=true
-          EOF
+            cat << EOF >> ~/.bash_profile
+            export BAILIAN_API_KEY="${AppApiKey}"
+            export OSS_ACCESS_KEY_ID="${AccessKey.AccessKeyId}"
+            export OSS_ACCESS_KEY_SECRET="${AccessKey.AccessKeySecret}"
+            export WANX_DEMO_OSS_BUCKET="${ALIYUN::StackId}"
+            export WANX_DEMO_USERNAME="${DemoUserName}"
+            export WANX_DEMO_PASSWORD="${DemoUserPassword}"
+            export WANX_DEMO_OSS_ENDPOINT="https://oss-${ALIYUN::Region}.aliyuncs.com"
+            export ROS_DEPLOY=true
+            EOF
 
-          source ~/.bash_profile
-          curl -fsSL https://help-static-aliyun-doc.aliyuncs.com/install-script/tongyi-wanxiang/install.sh|bash
+            source ~/.bash_profile
+            curl -fsSL https://help-static-aliyun-doc.aliyuncs.com/install-script/tongyi-wanxiang/install.sh|bash
+
+          - AppApiKey:
+              Fn::Select:
+                - Key
+                - Ref: AppApiKey
 Outputs:
   Public_address:
     Description:
@@ -408,7 +407,7 @@ Metadata:
         Label:
           default: 服务器基础配置
       - Parameters:
-          - BaiLianApiKey
+          - AppApiKey
           - DemoUserName
           - DemoUserPassword
         Label:
@@ -482,7 +481,6 @@ Metadata:
           Type: Custom
       CustomFields:
         - Key: InstancePassword
-        - Key: BaiLianApiKey
         - Key: DemoUserName
         - Key: DemoUserPassword
       CostRelatedKeys:
